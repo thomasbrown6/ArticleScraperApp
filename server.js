@@ -1,104 +1,52 @@
 // PORT
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+const logger = require("morgan");
+const mongoose = require("mongoose");
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+
 // Dependencies
-var express = require("express");
-var mongojs = require("mongojs");
-// Require request and cheerio. This makes the scraping possible
-var request = require("request");
-var Cheerio = require("cheerio");
+const bodyParser = require("body-parser");
+const exphbs = require("express-handlebars");
+const express = require("express");
+
 
 // Initialize Express
-var app = express();
+const app = express();
 
-// Database configuration
-var databaseUrl = "scraper";
-var collections = ["scrapedData"];
+// Use morgan logger for logging requests
+app.use(logger("dev"));
+// Static directory
+app.use(express.static("public")); //basically assets folder
 
- // An empty array to save the data that we'll scrape
- var results = [];
-
-// Make a request call to grab the HTML body from the site of your choice
-request(
-  "http://www.espn.com/nba/team/roster/_/name/lal/los-angeles-lakers",
-  function(error, response, html) {
-    // Load the HTML into cheerio and save it to a variable
-    // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-    var cheerio = Cheerio.load(html);
-
-   
-
-    // Select each element in the HTML body from which you want information.
-    // NOTE: Cheerio selectors function similarly to jQuery's selectors,
-    // but be sure to visit the package's npm page to see how it works
-    cheerio("td.sortcell").each(function(i, element) {
-      var link = cheerio(element)
-        .children()
-        .attr("href");
-      var player = cheerio(element)
-        .children()
-        .text();
-
-      // Save these results in an object that we'll push into the results array we defined earlier
-      results.push({
-        player: player,
-        link: link
-      });
-    });
-
-  }
-);
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function(error) {
-  console.log("Database Error:", error);
-});
 
-// Main route (simple Hello World Message)
-app.get("/", function(req, res) {
-  res.send("Hello World");
-});
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })); //middleware code comes from bodyparser package
+// parse application/json
+app.use(bodyParser.json());
 
-// TODO: make two more routes
+// Routes 
+//=======================================================
+require("./routes/apiRoutes.js")(app);
+require("./routes/scraper.js")(app);
 
-// Route 1
-// =======
-// This route will retrieve all of the data
-// from the scrapedData collection as a json (this will be populated
-// by the data you scrape using the next route)
-app.get("/all", function(req, res) {
-  db.scrapedData.find({}, function(err, data) {
-    if (err) throw err;
-    console.log(data);
-    res.send(data);
-});
 
-});
 
-// Route 2
-// =======
-// When you visit this route, the server will
-// scrape data from the site of your choice, and save it to
-// MongoDB.
-// TIP: Think back to how you pushed website data
-// into an empty array in the last class. How do you
-// push it into a MongoDB collection instead?
-app.get("/scrape", function(req, res) {
-  db.scrapedData.remove({});
-  db.scrapedData.insert(results);
-  //console.log(results);
-  res.send("Scraped Data");
-});
 
-app.get("/delete", function(req, res) {
-  db.scrapedData.remove({});
-  res.send("Deleted scraped data from Mongo");
-});
 
 /* -/-/-/-/-/-/-/-/-/-/-/-/- */
 
-// Listen on port 3000
+// Listen on port 4000
 app.listen(PORT, function() {
   console.log("App running on port " + PORT);
 });

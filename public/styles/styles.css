@@ -1,0 +1,96 @@
+
+/* Navbar styles */
+.navbar {
+    position: inherit;
+    width: 100%;
+    margin: auto;
+    margin-top: 50px;
+    background-color: navy;
+}
+
+.navbar-container {
+    width: 70%;
+}
+
+.nav-item,
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+/* End of Navbar styles */
+
+
+/* Background Properties */
+body {
+    background-color: gray;
+}
+
+/* Optional Image */
+.background-image {
+    height: 100%;
+    background-image: url("../images/background.jpg");
+}
+
+/* Article container */
+.container-fluid {
+    width: 70%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Article Card */
+.articleCard {
+    margin: 15px 0;
+}
+/* Article titles */
+h3.title {
+    font-size: 24px;
+}
+
+/* Article Images */
+img.article-pic {
+    height: 80px;
+    width: 140px;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+/* Summary Text */
+.summary {
+    padding: 0;
+    margin: 0;
+}
+
+/* Save Article Button */
+.save {
+    position: absolute;
+    right: 2%;
+    bottom: 5%;
+}
+
+/* Delete Button On Saved Page */
+.delete {
+    float: right;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+/* Leave Comment Button On Saved Page */
+.comments {
+    float: right;
+    margin-top: 5px;
+}
+
+/* Footer */
+.footer {
+    position: inherit;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+
+

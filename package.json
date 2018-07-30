@@ -18,11 +18,16 @@
   },
   "homepage": "https://github.com/thomasbrown6/ArticleScraperApp#readme",
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel": "^6.23.0",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "mongojs": "^2.6.0",
     "mongoose": "^5.2.5",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3",
     "request": "^2.87.0"
   }
 }

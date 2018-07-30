@@ -1,0 +1,40 @@
+<div class="jumbotron text-center">
+    <div class="overlay"></div>
+    <div class="background-image"></div>
+    <div class="caption">
+        <h1>NBA's Latest News</h1>
+        <p>TBrown Edition</p>
+    </div>
+</div>
+<div class="container-fluid article-container">
+    {{#if articleData}}
+    {{#each articleData}}
+    <div class="card articleCard">
+        <div class="card-header">
+            <h3 class="title" data-id={{this._id}}>
+                {{#if this.pic}}
+                <img class="article-pic" src="{{this.pic}}" alt="No Image">
+                {{/if}}
+                <a href={{this.link}} class="article-link">
+                    {{this.title}}
+                </a>
+                
+            </h3>
+        </div>
+        <div class="card-body">
+            <p class="summary">{{this.summary}}</p>
+            <a class="btn btn-success save">
+                    Save Article
+            </a>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <div class="card articleCard">
+        <div class="card-header">
+            No scraped data, push the scrape new articles button to display updated articles
+        </div>
+    </div>
+    {{/if}}
+
+</div>
