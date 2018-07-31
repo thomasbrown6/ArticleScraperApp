@@ -74,21 +74,17 @@ module.exports = function(app) {
   });
   // Route to get all articles on page
   app.get("/articles", function(req, res) {
-    db.Article.find({})
-      .then(function(dbArticle) {
-        res.render("index", { articleData: dbArticle });
-      })
-      .catch(function(err) {
-        return res.json(err);
-      });
+    db.Article.find({ saved: false}, (err, dbArticle) => {
+      res.render("index", { articleData: dbArticle });
+    });
   });
 
-  // Clear route, clears the articles from MongoDB and webpage
+  // Clear route, clears the articles from MongoDB and webpage is saved value is false
   app.get("/articles/clear", function(req, res) {
-    db.Article.remove({}, function(req, res) {
+    db.Article.deleteMany({ saved: false }, function(err) {
       console.log("cleared Articles");
     });
-    res.render("index");
+    res.redirect("/articles");
   });
 
   // Delete saved, clears a article from Article collection in MongoDB

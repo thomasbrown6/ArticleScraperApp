@@ -10,12 +10,7 @@ mongoose.connect("mongodb://localhost/ArticleMongoScraper");
 module.exports = function(app) {
   // Main route
   app.get("/", function(req, res) {
-    db.Article.find({})
-    .then(function(allArticles) {
-      res.render("index", {
-        articleData: allArticles
-      });
-    })
+    res.redirect("/articles");
   });
 
   // Saved route, goes to saved page, and displays saved articles
