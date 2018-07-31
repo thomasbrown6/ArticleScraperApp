@@ -11,7 +11,7 @@
     {{#each savedArticle}}
     <div class="card articleCard">
         <div class="card-header">
-            <h3 class="title" data-id={{this._id}}>
+            <h3 class="title" data-id={{this._id}} data-saved={{this.saved}}>
                 {{#if this.pic}}
                 <img class="article-pic" src="{{this.pic}}" alt="No Image">
                 {{/if}}
@@ -26,9 +26,26 @@
             <a class="btn btn-danger delete">
                 Delete Article
             </a>
-            <a class="btn btn-info comments">
+            <a class="btn comment" data-toggle="modal" data-target="#commentModal">
                 Leave Comment
             </a>
+        </div>
+        <div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                        <h4 class="modal-title" id="commentModalLabel">Leave a comment</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="commentBody">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="closeButton" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveChanges" data-id={{this._id}}>Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{/each}}

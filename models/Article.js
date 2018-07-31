@@ -4,14 +4,37 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 
-// Using the Schema constructor, create a new UserSchema object
-// This is similar to a Sequelize model
+// Using the Schema constructor, create a new ArticleSchema object
 const ArticleSchema = new Schema({
     // `title` is required and of type String
     title: {
       type: String,
-      required: true
-    },
+      required: true,
+      validate: {
+        isAsync: true,
+        validator: function(value, isValid) {
+            const scrapedArticle = this;
+            return scrapedArticle.constructor.findOne({ title: value })
+            .exec(function(err, dbArticle){
+                if(err){
+                    throw err;
+                }
+                else if(dbArticle) {
+                    if(scrapedArticle.id === dbArticle.id) {  // if finding and saving then it's valid even for existing article
+                        return isValid(true);
+                    }
+                    return isValid(false);  
+                }
+                else{
+                    return isValid(true);
+                }
+
+            })
+        },
+        message:  'The article is already in database'
+    }
+  },
+  
     // Summary is required and of type String
     summary: {
       type: String,
@@ -26,6 +49,17 @@ const ArticleSchema = new Schema({
     pic: {
       type: String,
       required: false
+    },
+    saved: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    comment: {
+      // Store ObjectIds in the array
+      type: Schema.Types.ObjectId,
+      // The ObjectIds will refer to the ids in the Comment model
+      ref: "Comment"
     }
   });
   

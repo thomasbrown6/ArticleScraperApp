@@ -3,7 +3,7 @@
     <div class="background-image"></div>
     <div class="caption">
         <h1>NBA's Latest News</h1>
-        <p>TBrown Edition</p>
+        <p>T.Brown Edition</p>
     </div>
 </div>
 <div class="container-fluid article-container">
@@ -11,7 +11,7 @@
     {{#each articleData}}
     <div class="card articleCard">
         <div class="card-header">
-            <h3 class="title" data-id={{this._id}}>
+            <h3 class="title" data-id={{this._id}} data-saved={{this.saved}}>
                 {{#if this.pic}}
                 <img class="article-pic" src="{{this.pic}}" alt="No Image">
                 {{/if}}

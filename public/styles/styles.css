@@ -64,9 +64,7 @@ img.article-pic {
 
 /* Save Article Button */
 .save {
-    position: absolute;
-    right: 2%;
-    bottom: 5%;
+    float: right;
 }
 
 /* Delete Button On Saved Page */
@@ -77,10 +75,18 @@ img.article-pic {
 }
 
 /* Leave Comment Button On Saved Page */
-.comments {
+a.comment {
     float: right;
     margin-top: 5px;
+    background: navy;
+    color: white;
+    font: white;
 }
+a:not([href]):not([tabindex]) {
+     color: white; 
+    text-decoration: none;
+}
+
 
 /* Footer */
 .footer {

@@ -35,12 +35,10 @@ app.use(bodyParser.urlencoded({ extended: true })); //middleware code comes from
 // parse application/json
 app.use(bodyParser.json());
 
-// Routes 
+// Require Routes 
 //=======================================================
-require("./routes/apiRoutes.js")(app);
 require("./routes/scraper.js")(app);
-
-
+require("./routes/htmlRoutes.js")(app);
 
 
 

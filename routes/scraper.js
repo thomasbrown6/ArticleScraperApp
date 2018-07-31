@@ -58,23 +58,23 @@ module.exports = function(app) {
         link: link,
         pic: pic
       });
-
     });
   });
-
-  // Routes
-  //========================================
-  // Main route
-  app.get("/", function(req, res) {
-    db.Article.remove({}, function(req, res) {
-      console.log(`removed Articles`);
-    });
-    res.render("index");
-  });
+  
 
   // Scrape route, the server will scrape data from the site and save it to MongoDB.
-  app.get("/articles", function(req, res) {
+  app.post("/articles", function(req, res) {
     db.Article.create(articles)
+      .then(function(dbArticle) {
+        res.render("index", { articleData: dbArticle });
+      })
+      .catch(function(err) {
+        return res.json(err);
+      });
+  });
+  // Route to get all articles on page
+  app.get("/articles", function(req, res) {
+    db.Article.find({})
       .then(function(dbArticle) {
         res.render("index", { articleData: dbArticle });
       })
@@ -86,44 +86,54 @@ module.exports = function(app) {
   // Clear route, clears the articles from MongoDB and webpage
   app.get("/articles/clear", function(req, res) {
     db.Article.remove({}, function(req, res) {
-      console.log(`cleared Articles `);
+      console.log("cleared Articles");
     });
     res.render("index");
   });
 
-  // Delete saved, clears the articles from SavedArticle collection in MongoDB
-  app.get("/articles/saved/:id", function(req, res) {
-    db.SavedArticle.deleteOne({ _id: req.params._id}, function (err) {
-      if (err) return handleError(err);
-      // deleted at most one tank document
+  // Delete saved, clears a article from SavedArticle collection in MongoDB
+  app.get("/articles/saved/:id", (req, res) => {
+    db.SavedArticle.findByIdAndRemove(
+      req.params.id,
+      (err, dbArticle) => {}
+    ).then(dbArticle => {
+      res.render("saved");
     });
-    res.render("saved");
-  });
-
-  // Saved route, goes to saved page, and displays saved articles
-  app.get("/articles/saved", function(req, res) {
-    db.SavedArticle.find({})
-      .then(function(savedArticles) {
-        res.render("saved", {
-        savedArticle: savedArticles
-        })
-      })
-      .catch(function(err) {
-        res.json(err);
-      });
   });
 
   // Route for saving a article
-  app.post("/articles/saved/:id", (req, res) => {
-    console.log(req.params.id);
-    db.SavedArticle.create(req.body)
+  app.put("/articles/saved/:id", (req, res) => {
+    db.Article.findOneAndUpdate({
+      _id: req.params.id },
+      {saved: true})
       .then(dbArticle => {
-        return db.Article.findByIdAndRemove(req.params.id, (err, dbArticle) => {
-        })
-          .then(dbArticle => {
-            res.redirect("/articles");
-          });
-      });
+        console.log(dbArticle);
+          res.render("index");
+        });
+  });
+  // Route for removing a article from saved page
+  app.put("/articles/unsave/:id", (req, res) => {
+    db.Article.findOneAndUpdate({
+      _id: req.params.id },
+      {saved: false})
+      .then(dbArticle => {
+        // console.log(dbArticle);
+          res.render("saved");
+        });
   });
 
+  // Route for saving/updating an Article's commentf
+  app.post("/articles/:id", function(req, res) {
+    // Create a new comment and pass the req.body to the entry
+    db.Comment.create(req.body)
+    .then(dbComment => {
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+  })
+  .then(dbComment => {
+    res.json(dbArticle);
+  })
+  .catch(err => {
+    res.json(err);
+  });
+});
 };
