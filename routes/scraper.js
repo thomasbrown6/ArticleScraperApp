@@ -64,6 +64,9 @@ module.exports = function(app) {
 
   // Scrape route, the server will scrape data from the site and save it to MongoDB.
   app.post("/articles", function(req, res) {
+    db.Article.deleteMany({ saved: false }, function(err) {
+      console.log("cleared Articles");
+    });
     db.Article.create(articles)
       .then(function(dbArticle) {
         res.render("index", { articleData: dbArticle });
@@ -114,6 +117,7 @@ module.exports = function(app) {
       _id: req.params.id },
       {saved: false})
       .then(dbArticle => {
+        // return db.Comments.findOneAndRemove
         // console.log(dbArticle);
           res.render("saved");
         });
@@ -124,8 +128,8 @@ module.exports = function(app) {
     console.log(req.body);
     // Create a new comment and pass the req.body to the entry
     db.Comments.create(req.body)
-    .then(dbComment => {
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+    .then(newcomment => {
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: newcomment._id }, { new: true });
   })
   .then(comment => {
     //console.log(comment);
