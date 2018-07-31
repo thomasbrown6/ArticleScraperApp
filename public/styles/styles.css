@@ -92,6 +92,15 @@ a:not([href]):not([tabindex]) {
     text-decoration: none;
 }
 
+/* Comments on the article card */
+.listOfComments {
+    margin-top: 10px;
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 5px;
+}
+
+
 /* Modal button save changes */
 #saveChanges {
     background: navy;
