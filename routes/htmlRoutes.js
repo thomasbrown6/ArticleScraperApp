@@ -23,7 +23,7 @@ module.exports = function(app) {
     db.Article.find({ saved: true })
       .then(function(savedArticles) {
         res.render("saved", {
-          savedArticle: savedArticles
+          savedArticle: savedArticles,
         });
       })
       .catch(function(err) {

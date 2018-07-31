@@ -43,6 +43,12 @@ body {
 .articleCard {
     margin: 15px 0;
 }
+
+/* Article Link */
+.article-link {
+    padding-left: 17px;
+}
+
 /* Article titles */
 h3.title {
     font-size: 24px;
@@ -53,7 +59,8 @@ img.article-pic {
     height: 80px;
     width: 140px;
     font-size: 14px;
-    padding-right: 10px;
+    border: 0px solid;
+    border-radius: 3px;
 }
 
 /* Summary Text */
@@ -75,16 +82,20 @@ img.article-pic {
 }
 
 /* Leave Comment Button On Saved Page */
-a.comment {
+.comment {
     float: right;
     margin-top: 5px;
     background: navy;
-    color: white;
-    font: white;
 }
 a:not([href]):not([tabindex]) {
      color: white; 
     text-decoration: none;
+}
+
+/* Modal button save changes */
+#saveChanges {
+    background: navy;
+    color: white;
 }
 
 

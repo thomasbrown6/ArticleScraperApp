@@ -23,6 +23,7 @@
         </div>
         <div class="card-body">
             <p class="summary">{{this.summary}}</p>
+            <p class="listOfComments">{{this.dbComment}}</p>
             <a class="btn btn-danger delete">
                 Delete Article
             </a>
@@ -42,7 +43,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" id="closeButton" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveChanges" data-id={{this._id}}>Save changes</button>
+                        <button type="button" class="btn" id="saveChanges" data-id={{this._id}}>Save changes</button>
                     </div>
                 </div>
             </div>

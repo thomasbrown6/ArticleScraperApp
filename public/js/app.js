@@ -8,9 +8,6 @@ $(document).on("click", ".clear", clearArticles);
 $(document).on("click", "#saveChanges", postComment); 
 
 
-  $(".navbar-toggler").on("click", function(event) {
-    event.preventDefault();
-  });
 
 
 // Function to save a article
@@ -75,13 +72,16 @@ function postComment() {
   console.log(thisId);
   $.ajax({
     method: "POST", 
-    url: `/articles/${thisId}`,
+    url: `/articles/comment/${thisId}`,
     data: {
-      body: bodyInput
+      comment: bodyInput
     }
   })
     .then(function(data) {
 
     });
     $("#closeButton").click();
+    window.location.reload();
+    console.log(bodyInput);
+
 };

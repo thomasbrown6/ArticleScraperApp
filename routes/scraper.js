@@ -91,9 +91,9 @@ module.exports = function(app) {
     res.render("index");
   });
 
-  // Delete saved, clears a article from SavedArticle collection in MongoDB
+  // Delete saved, clears a article from Article collection in MongoDB
   app.get("/articles/saved/:id", (req, res) => {
-    db.SavedArticle.findByIdAndRemove(
+    db.Article.findByIdAndRemove(
       req.params.id,
       (err, dbArticle) => {}
     ).then(dbArticle => {
@@ -107,10 +107,11 @@ module.exports = function(app) {
       _id: req.params.id },
       {saved: true})
       .then(dbArticle => {
-        console.log(dbArticle);
+        // console.log(dbArticle);
           res.render("index");
         });
   });
+
   // Route for removing a article from saved page
   app.put("/articles/unsave/:id", (req, res) => {
     db.Article.findOneAndUpdate({
@@ -123,7 +124,7 @@ module.exports = function(app) {
   });
 
   // Route for saving/updating an Article's commentf
-  app.post("/articles/:id", function(req, res) {
+  app.post("/articles/comment/:id", function(req, res) {
     // Create a new comment and pass the req.body to the entry
     db.Comment.create(req.body)
     .then(dbComment => {
