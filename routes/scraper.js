@@ -119,18 +119,36 @@ module.exports = function(app) {
         });
   });
 
-  // Route for saving/updating an Article's commentf
+  // Route for saving/updating an Article's comment
   app.post("/articles/comment/:id", function(req, res) {
+    console.log(req.body);
     // Create a new comment and pass the req.body to the entry
-    db.Comment.create(req.body)
+    db.Comments.create(req.body)
     .then(dbComment => {
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
   })
-  .then(dbComment => {
-    res.json(dbArticle);
+  .then(comment => {
+    //console.log(comment);
   })
   .catch(err => {
     res.json(err);
   });
 });
+
+
+//   // Route for saving/updating an Article's comment
+//   app.put("/articles/comment/:id", function(req, res) {
+//     // Create a new comment and pass the req.body to the entry
+//     db.Comments.create(req.body)
+//     .then(dbComment => {
+//       return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+//   })
+//   .then(comment => {
+//     console.log(comment);
+//   })
+//   .catch(err => {
+//     res.json(err);
+//   });
+// });
+
 };

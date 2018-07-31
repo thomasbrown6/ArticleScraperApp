@@ -15,7 +15,7 @@ module.exports = function(app) {
 
   // Saved route, goes to saved page, and displays saved articles
   app.get("/articles/saved", function(req, res) {
-    db.Article.find({ saved: true })
+    db.Article.find({ saved: true }).populate("comment")
       .then(function(savedArticles) {
         res.render("saved", {
           savedArticle: savedArticles,

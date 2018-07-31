@@ -69,7 +69,7 @@ function clearArticles() {
 function postComment() {
   const bodyInput = $("#commentBody").val().trim();  
   const thisId = $(this).attr("data-id");
-  console.log(thisId);
+  console.log(bodyInput);
   $.ajax({
     method: "POST", 
     url: `/articles/comment/${thisId}`,

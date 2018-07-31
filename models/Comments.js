@@ -7,11 +7,11 @@ const Schema = mongoose.Schema;
 // This is similar to a Sequelize model
 const CommentSchema = new Schema({
   // `body` is of type String
-  body: String
+  comment: String
 });
 
 // This creates our model from the above schema, using mongoose's model method
-const Comment = mongoose.model("Comment", CommentSchema);
+const Comments = mongoose.model("Comments", CommentSchema);
 
 // Export the Comment model
-module.exports = Comment;
+module.exports = Comments;
