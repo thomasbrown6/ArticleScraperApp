@@ -94,10 +94,15 @@ a:not([href]):not([tabindex]) {
 
 /* Comments on the article card */
 .listOfComments {
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 0;
-    position: absolute;
-    bottom: 5px;
+    font-size: 22px;
+}
+
+#deleteComment {
+    margin-left: 10px;
+    font-size: 12px;
+    margin-bottom: 8px;
 }
 
 

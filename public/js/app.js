@@ -6,6 +6,7 @@ $(document).on("click", ".scrape-new", scrapeArticles);
 $(document).on("click", ".delete", removeArticles);
 $(document).on("click", ".clear", clearArticles);
 $(document).on("click", "#saveChanges", postComment); 
+$(document).on("click", "#deleteComment", deleteComment); 
 
 
 
@@ -84,4 +85,18 @@ function postComment() {
     window.location.reload();
     console.log(bodyInput);
 
+};
+
+
+function deleteComment() {
+  const thisId = $(this).parent().attr("data-id");
+  console.log(thisId);
+  $.ajax({
+    url: `/articles/comment/${thisId}`,
+    type: "GET",
+    success: function(result) {
+        console.log(result);
+    }
+});  
+window.location.reload();
 };

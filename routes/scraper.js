@@ -139,20 +139,16 @@ module.exports = function(app) {
   });
 });
 
+  // Delete a comment from MongoDB and from the article
+  app.get("/articles/comment/:id", (req, res) => {
+    console.log(req.params.id);
+    db.Comments.findByIdAndRemove(
+      req.params.id,
+      (err, dbArticle) => {}
+    ).then(dbArticle => {
+      res.redirect("/articles/saved");
+    });
+  });
 
-//   // Route for saving/updating an Article's comment
-//   app.put("/articles/comment/:id", function(req, res) {
-//     // Create a new comment and pass the req.body to the entry
-//     db.Comments.create(req.body)
-//     .then(dbComment => {
-//       return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
-//   })
-//   .then(comment => {
-//     console.log(comment);
-//   })
-//   .catch(err => {
-//     res.json(err);
-//   });
-// });
 
 };

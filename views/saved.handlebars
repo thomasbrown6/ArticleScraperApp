@@ -1,56 +1,66 @@
 <div class="jumbotron text-center">
-        <div class="overlay"></div>
-        <div class="background-image"></div>
-        <div class="caption">
-            <h1>Saved Articles</h1>
-            <p>Your Saved NBA Articles</p>
-        </div>
+    <div class="overlay"></div>
+    <div class="background-image"></div>
+    <div class="caption">
+        <h1>Saved Articles</h1>
+        <p>Your Saved NBA Articles</p>
     </div>
+</div>
 <div class="container-fluid article-container">
-    {{#if savedArticle}}
-    {{#each savedArticle}}
+    {{#if savedArticle}} {{#each savedArticle}}
     <div class="card articleCard">
         <div class="card-header">
             <h3 class="title" data-id={{this._id}} data-saved={{this.saved}}>
                 {{#if this.pic}}
-                <img class="article-pic" src="{{this.pic}}" alt="No Image">
-                {{/if}}
+                <img class="article-pic" src="{{this.pic}}" alt="No Image"> {{/if}}
                 <a href={{this.link}} class="article-link">
                     {{this.title}}
                 </a>
-                
+
             </h3>
         </div>
         <div class="card-body">
-            <p class="summary"> <strong>Summary:</strong> {{this.summary}}</p>
-            <p class="listOfComments"> <strong>Comments:</strong> {{this.comment.comment}}</p>
+            <p class="summary">
+                <strong>Summary:</strong> {{this.summary}}</p>
             <a class="btn btn-danger delete">
                 Delete Article
             </a>
+            {{!-- Triggers modal --}}
             <a class="btn comment" data-toggle="modal" data-target="#commentModal">
                 Leave Comment
             </a>
         </div>
-        <div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+
+        <!-- Modal -->
+        <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
-                        <h4 class="modal-title" id="commentModalLabel">Leave a comment</h4>
+                        <h5 class="modal-title" id="commentModalLabel">Leave a comment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
+                        <p class="listOfComments" data-id="{{this.comment._id}}">{{this.comment.comment}} 
+                            {{#if this.comment.comment}}
+                            <button class="btn btn-danger" id="deleteComment">
+                                <span aria-hidden="true">delete</span>
+                            </button>
+                            {{/if}}
+                        </p>
+                        
                         <input type="text" class="form-control" id="commentBody">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="closeButton" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" id="closeButton" data-dismiss="modal">Close</button>
                         <button type="button" class="btn" id="saveChanges" data-id={{this._id}}>Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{/each}}
-    {{else}}
+    {{/each}} {{else}}
     <div class="card articleCard">
         <div class="card-header">
             You Have No Saved Articles
