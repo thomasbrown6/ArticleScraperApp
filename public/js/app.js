@@ -24,6 +24,7 @@ function saveArticles() {
   }).then(function(data) {
       console.log("firing the .then");
     window.location.reload();
+    alert("Article saved");
   });
 };
 
@@ -34,6 +35,7 @@ function scrapeArticles() {
     }).catch(function(err) {
         throw err;
     });
+    alert("Scraping New Articles...");
 }
 
 // Function to remove articles from saved page
@@ -61,6 +63,7 @@ function clearArticles() {
         }
     }).then(function(data) {
         window.location.reload();
+        alert("Clearing Unsaved Articles...");
     });
 
 };

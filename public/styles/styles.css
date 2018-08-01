@@ -10,6 +10,8 @@
 
 .navbar-container {
     width: 70%;
+    font-family: 'Exo', sans-serif;
+
 }
 
 .nav-item,
@@ -19,9 +21,29 @@
 /* End of Navbar styles */
 
 
+/* Jumbotron - making it transparent */
+.jumbotron {
+    background: rgb(204, 204, 204); /* Fallback for older browsers without RGBA-support */
+    background: rgba(204, 204, 204, 0.5);
+}
+
+/* Text inside of .jumbotron */
+.jumboHeader {
+    font-family: 'Exo', sans-serif;
+    text-shadow: 2px 2px white;
+    color: navy;
+    font-weight: bold;
+}
+.caption {
+    font-family: 'Exo', sans-serif;
+    color: white;
+}
+
 /* Background Properties */
 body {
-    background-color: gray;
+    background-image: url("../images/articlebackground.jpg");
+   background-color: #cccccc;
+   background-attachment: fixed;
 }
 
 /* Optional Image */
